@@ -1,0 +1,73 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>База данных предприятий Российской Империи</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+              <img src="{% static 'icon.png' %}" width="40" height="40">
+              <span class="fs-4" style="color: black; margin-left: 15px;">База данных предприятий Российской Империи</span>
+          </a>
+
+          <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/" class="nav-link">Графики</a></li>
+            <li class="nav-item"><a href="/database" class="nav-link">База данных</a></li>
+            <li class="nav-item"><a href="/entrepreneurs" class="nav-link active">Предприниматели</a></li>
+            <li class="nav-item"><a href="/about-project" class="nav-link">О проекте</a></li>
+          </ul>
+        </header>
+    </div>
+    <div>
+        <div class="container px-4 py-5" id="custom-cards">
+            <h2 class="pb-2 border-bottom">Список предприятий</h2>
+            <form class="form-inline my-2 my-md-0" method="POST">
+                {% csrf_token %}
+                <input class="form-control" type="text" placeholder="Поиск предпринимателей" aria-label="Search" name="search">
+            </form>
+            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5" style="margin-top: 30px;">
+            {% for fabricator in fabricators %}
+                <a href="/ententrepreneurs/{{ fabricator.id }}" style="text-decoration: none;">
+                  <div class="col" style="height: 400px;">
+                    {% if fabricator.info is None %}
+                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/logo.jpg'); background-size: 100%; background-position: top; background-repeat: no-repeat;">
+                    {% else %}
+                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/{{ fabricator.info }}.jpg'); background-size: 100%; background-position: top; background-repeat: no-repeat;">
+                    {% endif %}
+                      <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" style="text-shadow: black 2px 3px 4px;">{{ fabricator.fabricator.fabricator_name }}</h3>
+                        <ul class="d-flex list-unstyled mt-auto">
+                          <li class="me-auto">
+                              {% if fabricator.county.id == 1 %}
+                                <img src="{% static 'yar.jpg' %}" alt="Bootstrap" width="90" height="90" class="rounded-circle border border-white">
+                              {% elif fabricator.county.id == 2 %}
+                                <img src="{% static 'kos.jpg' %}" alt="Bootstrap" width="90" height="90" class="rounded-circle border border-white">
+                              {% elif fabricator.county.id == 3 %}
+                                <img src="{% static 'ng.jpg' %}" alt="Bootstrap" width="90" height="90" class="rounded-circle border border-white">
+                              {% else %}
+                                <img src="https://github.com/twbs.png" alt="Bootstrap" width="90" height="90" class="rounded-circle border border-white">
+                              {% endif %}
+                          </li>
+                          <li class="d-flex align-items-center me-3" style="text-shadow: black 2px 3px 4px;">
+                            <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                            <small>{{ fabricator.county.county_name }}</small>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                {% endfor %}
+                </div>
+            </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>База данных предприятий Российской Империи</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+              <img src="{% static 'icon.png' %}" width="40" height="40">
+              <span class="fs-4" style="color: black; margin-left: 15px;">База данных предприятий Российской Империи</span>
+          </a>
+
+          <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/" class="nav-link active">Графики</a></li>
+            <li class="nav-item"><a href="/database" class="nav-link">База данных</a></li>
+            <li class="nav-item"><a href="/entrepreneurs" class="nav-link">Предприниматели</a></li>
+            <li class="nav-item"><a href="/about-project" class="nav-link">О проекте</a></li>
+          </ul>
+        </header>
+    </div>
+    <div class="px-4 py-5 my-5 text-center">
+        <h1>Фильтры</h1>
+        <form method="get">
+            <h3>Губернии</h3>
+            {% for county in counties %}
+                <div class="form-check" style="text-align:center; vertical-align:middle;">
+                    <label>{{ county.0 }}</label>
+                    {% if county.2 %}
+                        <input id="label_{{ county.1 }}" type="checkbox" name="label_{{ county.1 }}" checked>
+                    {% else %}
+                        <input id="label_{{ county.1 }}" type="checkbox" name="label_{{ county.1 }}">
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <input class="btn btn-primary" type="submit" value="Применить">
+        </form>
+        <figure class="highcharts-figure" style="padding-top: 50px;">
+          <div id="container"></div>
+        </figure>
+        <script type="text/javascript">
+            // Data retrieved from https://gs.statcounter.com/browser-market-share#monthly-202201-202201-bar
+
+            var country_data = {{ country_data | safe }};
+            var series = {{ series | safe }};
+            console.log(country_data);
+            // Create the chart
+            Highcharts.chart('container', {
+              chart: {
+                type: 'column'
+              },
+              title: {
+                align: 'left',
+                text: 'Средняя выручка предприятий'
+              },
+              subtitle: {
+                align: 'left',
+                text: 'Кликните по колонке, чтобы открыть информацию о прибыли предприятий'
+              },
+              accessibility: {
+                announceNewData: {
+                  enabled: true
+                }
+              },
+              xAxis: {
+                type: 'category'
+              },
+              yAxis: {
+                title: {
+                  text: 'Средняя выручка в тысячах рублей'
+                }
+              },
+              legend: {
+                enabled: false
+              },
+              plotOptions: {
+                series: {
+                  borderWidth: 0,
+                  dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.0f}'
+                  }
+                }
+              },
+
+              tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> тыс. руб<br/>'
+              },
+
+              series: [
+                {
+                  name: 'Область',
+                  colorByPoint: true,
+                  data: country_data
+                }
+              ],
+              drilldown: {
+                breadcrumbs: {
+                  position: {
+                    align: 'right'
+                  }
+                },
+                series: series
+              }
+            });
+        </script>
+    </div>
+</body>
+</html>

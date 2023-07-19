@@ -1,0 +1,73 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>База данных предприятий Российской Империи</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+              <img src="{% static 'icon.png' %}" width="40" height="40">
+              <span class="fs-4" style="color: black; margin-left: 15px;">База данных предприятий Российской Империи</span>
+          </a>
+
+          <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/" class="nav-link">Графики</a></li>
+            <li class="nav-item"><a href="/database" class="nav-link">База данных</a></li>
+            <li class="nav-item"><a href="/entrepreneurs" class="nav-link">Предприниматели</a></li>
+            <li class="nav-item"><a href="/about-project" class="nav-link active">О проекте</a></li>
+          </ul>
+        </header>
+    </div>
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold text-body-emphasis">О проекте</h1>
+        <div class="col-lg-6 mx-auto">
+          <p>База данных предприятий Российской Империи" - это онлайн-ресурс, созданный для того, чтобы помочь исследователям, экономистам и историкам получить лучший доступ к историческим данным о предприятиях России.</p>
+          <p>На этом сайте были собраны данные о тысячах предприятий Российской Империи, начиная с 18 века и до конца страны в 1917 году. Их регионы, отрасли, масштабы производства, учредители и их связи - все это доступно для изучения в базе данных.</p>
+          <p>Наш проект первоначально был создан для исследования хозяйственной деятельности России и понимания, как она стала важным игроком на мировой арене. Однако по мере того, как мы продвигались в работе, мы поняли, что эти данные пользовательская база на самом деле должна служить другим целям:</p>
+        </div>
+        <div class="list-group" style="margin-left: 22%; margin-right: 22%;">
+            <a href="#" class="list-group-item list-group-item-action gap-3 py-3" aria-current="true">
+              <div class="gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">· Дать людям возможность исследовать свои генеалогические корни и исторические связи с Российской Империей</h6>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action gap-3 py-3" aria-current="true">
+              <div class="gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">· Помочь студентам и исследователям получить доступ к ценным материалам для своих работ</h6>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action gap-3 py-3" aria-current="true">
+              <div class="gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">· Послужить для принятия решений для тех, кто заинтересован в стартапах или российской истории бизнеса</h6>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action gap-3 py-3" aria-current="true">
+              <div class="gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">· Облегчить исследования связанные с патримониальными и управленческими структурами России</h6>
+                </div>
+              </div>
+            </a>
+        </div>
+        <div class="col-lg-6 mx-auto" style="padding-top: 10px;">
+            <p>Разработчик работал очень усердно, чтобы обеспечить базу данных как можно лучшим контентом и возможностями для ее пользователей. Он продолжает улучшать и расширять базу, и приглашает вас воспользоваться ею и узнать больше об истории российского бизнеса.</p>
+        </div>
+        <img src="{% static 'icon.png' %}" width="150" height="150" style="margin-top: 10px;">
+    </div>
+
+</body>
+</html>
